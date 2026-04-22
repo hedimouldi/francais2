@@ -10,23 +10,23 @@ const RoomRecycling = {
 
         // === 4 NEW DALL-E PANELS ===
         const imgPath = 'assets/panels/recycling_panel_1776878393692.png';
-        const p1 = EcoUtils.createImagePanel(imgPath, 'Recyclage 1', 'Tri sélectif innovant.', 5, 3.5);
+        const p1 = EcoUtils.createImagePanel(imgPath, 'Recyclage 1', 'Tri sélectif innovant.', 5, 3.5, 'recycling');
         p1.position.set(pos.x - 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p1);
         g.add(p1);
 
-        const p2 = EcoUtils.createImagePanel(imgPath, 'Recyclage 2', 'Transformation des déchets.', 5, 3.5);
+        const p2 = EcoUtils.createImagePanel(imgPath, 'Recyclage 2', 'Transformation des déchets.', 5, 3.5, 'recycling');
         p2.position.set(pos.x + 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p2);
         g.add(p2);
 
-        const p3 = EcoUtils.createImagePanel(imgPath, 'Recyclage 3', 'Impact sur la nature.', 5, 3.5);
+        const p3 = EcoUtils.createImagePanel(imgPath, 'Recyclage 3', 'Impact sur la nature.', 5, 3.5, 'recycling');
         p3.position.set(pos.x - 17.8, 4.5, pos.z - 12);
         p3.rotation.y = Math.PI / 2;
         Controls.addInteractable(p3);
         g.add(p3);
 
-        const p4 = EcoUtils.createImagePanel(imgPath, 'Recyclage 4', 'Économie circulaire.', 5, 3.5);
+        const p4 = EcoUtils.createImagePanel(imgPath, 'Recyclage 4', 'Économie circulaire.', 5, 3.5, 'recycling');
         p4.position.set(pos.x + 17.8, 4.5, pos.z - 12);
         p4.rotation.y = -Math.PI / 2;
         Controls.addInteractable(p4);

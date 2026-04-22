@@ -10,25 +10,25 @@ const RoomEnergy = {
 
         // === 4 NEW DALL-E PANELS ===
         const imgPath = 'assets/panels/energy_panel_1776878172899.png';
-        const p1 = EcoUtils.createImagePanel(imgPath, 'Énergie 1', 'Transition vers les énergies propres.', 5, 3.5);
+        const p1 = EcoUtils.createImagePanel(imgPath, 'Énergie 1', 'Le pouvoir du vent.', 5, 3.5, 'energy');
         p1.position.set(pos.x - 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p1);
         g.add(p1);
 
-        const p2 = EcoUtils.createImagePanel(imgPath, 'Énergie 2', 'Le futur de l\'énergie éolienne.', 5, 3.5);
+        const p2 = EcoUtils.createImagePanel(imgPath, 'Énergie 2', 'L\'énergie solaire.', 5, 3.5, 'energy');
         p2.position.set(pos.x + 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p2);
         g.add(p2);
 
-        const p3 = EcoUtils.createImagePanel(imgPath, 'Énergie 3', 'Innovation solaire.', 5, 3.5);
+        const p3 = EcoUtils.createImagePanel(imgPath, 'Énergie 3', 'Hydroélectricité moderne.', 5, 3.5, 'energy');
         p3.position.set(pos.x - 17.8, 4.5, pos.z + 12);
         p3.rotation.y = Math.PI / 2;
         Controls.addInteractable(p3);
         g.add(p3);
 
-        const p4 = EcoUtils.createImagePanel(imgPath, 'Énergie 4', 'Réseaux intelligents.', 5, 3.5);
-        p4.position.set(pos.x + 17.8, 4.5, pos.z - 12);
-        p4.rotation.y = -Math.PI / 2;
+        const p4 = EcoUtils.createImagePanel(imgPath, 'Énergie 4', 'Réseaux intelligents.', 5, 3.5, 'energy');
+        p4.position.set(pos.x, 4.5, pos.z + 17.8);
+        p4.rotation.y = Math.PI;
         Controls.addInteractable(p4);
         g.add(p4);
 

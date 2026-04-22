@@ -10,24 +10,24 @@ const RoomBiodiversity = {
 
         // === 4 NEW DALL-E PANELS ===
         const imgPath = 'assets/panels/biodiversity_panel_1776878333581.png';
-        const p1 = EcoUtils.createImagePanel(imgPath, 'Bio 1', 'Richesse de la forêt tropicale.', 5, 3.5);
-        p1.position.set(pos.x - 10, 4.5, pos.z - 17.8);
+        const p1 = EcoUtils.createImagePanel(imgPath, 'Bio 1', 'Protection des espèces.', 5, 3.5, 'biodiversity');
+        p1.position.set(pos.x - 10, 4.5, pos.z - 17.8); // Front wall
         Controls.addInteractable(p1);
         g.add(p1);
 
-        const p2 = EcoUtils.createImagePanel(imgPath, 'Bio 2', 'Diversité de la faune.', 5, 3.5);
+        const p2 = EcoUtils.createImagePanel(imgPath, 'Bio 2', 'Restauration des habitats.', 5, 3.5, 'biodiversity');
         p2.position.set(pos.x + 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p2);
         g.add(p2);
 
-        const p3 = EcoUtils.createImagePanel(imgPath, 'Bio 3', 'Flore exceptionnelle.', 5, 3.5);
-        p3.position.set(pos.x - 17.8, 4.5, pos.z - 12);
+        const p3 = EcoUtils.createImagePanel(imgPath, 'Bio 3', 'Océans propres.', 5, 3.5, 'biodiversity');
+        p3.position.set(pos.x - 17.8, 4.5, pos.z - 10); // Left wall
         p3.rotation.y = Math.PI / 2;
         Controls.addInteractable(p3);
         g.add(p3);
 
-        const p4 = EcoUtils.createImagePanel(imgPath, 'Bio 4', 'Écosystèmes marins.', 5, 3.5);
-        p4.position.set(pos.x + 17.8, 4.5, pos.z - 12);
+        const p4 = EcoUtils.createImagePanel(imgPath, 'Bio 4', 'Forêts préservées.', 5, 3.5, 'biodiversity');
+        p4.position.set(pos.x + 17.8, 4.5, pos.z - 10); // Right wall
         p4.rotation.y = -Math.PI / 2;
         Controls.addInteractable(p4);
         g.add(p4);

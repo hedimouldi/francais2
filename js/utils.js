@@ -385,9 +385,9 @@ const EcoUtils = {
     },
 
     /**
-     * Create an image panel from a URL or texture
+     * Create an image panel from a URL or texture (High Standing Gallery Style)
      */
-    createImagePanel(textureOrUrl, title, description, width = 4, height = 3) {
+    createImagePanel(textureOrUrl, title, description, width = 4, height = 3, theme = null) {
         const group = new THREE.Group();
         
         let map = textureOrUrl;
@@ -407,36 +407,158 @@ const EcoUtils = {
         painting.position.z = 0.05;
         group.add(painting);
 
-        // High Standing Frame
+        // High Standing Frame (Brushed Metal/Premium Dark Wood)
         const fw = 0.1;
         const fd = 0.08;
         const frameMat = new THREE.MeshStandardMaterial({
-            color: 0x111111,
+            color: 0x1a1a1a,
             roughness: 0.2,
             metalness: 0.8
         });
 
-        // Top
         const top = new THREE.Mesh(new THREE.BoxGeometry(width + fw * 2, fw, fd), frameMat);
         top.position.set(0, height / 2 + fw / 2, 0);
         group.add(top);
 
-        // Bottom
         const bottom = top.clone();
         bottom.position.y = -height / 2 - fw / 2;
         group.add(bottom);
 
-        // Left
         const left = new THREE.Mesh(new THREE.BoxGeometry(fw, height + fw * 2, fd), frameMat);
         left.position.x = -width / 2 - fw / 2;
         group.add(left);
 
-        // Right
         const right = left.clone();
         right.position.x = width / 2 + fw / 2;
         group.add(right);
 
-        group.userData = { interactive: true, icon: '🖼️', title: title, description: description };
+        // Spotlight for the painting
+        const spotLight = new THREE.SpotLight(0xfff5e6, 0.8, 10, Math.PI / 6, 0.5, 1);
+        spotLight.position.set(0, height + 1, 2);
+        spotLight.target = painting;
+        group.add(spotLight);
+
+        // Gallery Plaque (Cartel)
+        const plaqueGeo = new THREE.BoxGeometry(0.8, 0.3, 0.02);
+        const plaqueMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, metalness: 0.9, roughness: 0.3 });
+        const plaque = new THREE.Mesh(plaqueGeo, plaqueMat);
+        plaque.position.set(0, -height / 2 - 0.5, 0.01);
+        group.add(plaque);
+
+        const plaqueText = this.createTextSprite(title, {
+            fontSize: 24, fontWeight: 'bold', color: '#111111', scale: 0.005
+        });
+        plaqueText.position.set(0, -height / 2 - 0.5, 0.03);
+        group.add(plaqueText);
+
+        group.userData = { 
+            interactive: true, 
+            icon: '🖼️', 
+            title: title, 
+            description: description 
+        };
+
+        if (theme) {
+            group.userData.prototypeFunc = () => this.getThemePrototype(theme);
+        }
+
+        return group;
+    },
+
+    /**
+     * Generates a modern, attractive 3D prototype based on the theme
+     */
+    getThemePrototype(theme) {
+        const group = new THREE.Group();
+        let mainMesh;
+        
+        switch(theme) {
+            case 'climate':
+                // Holographic glowing earth
+                const earthGeo = new THREE.IcosahedronGeometry(1.5, 3);
+                const earthMat = new THREE.MeshStandardMaterial({
+                    color: 0x00aaff, wireframe: true, emissive: 0x0044aa, emissiveIntensity: 0.5
+                });
+                mainMesh = new THREE.Mesh(earthGeo, earthMat);
+                const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.4, 2), new THREE.MeshStandardMaterial({ color: 0x00ffcc, transparent: true, opacity: 0.8 }));
+                group.add(core);
+                break;
+                
+            case 'energy':
+                // Futuristic energy core (glowing crystal)
+                const crystalGeo = new THREE.OctahedronGeometry(1.2, 0);
+                const crystalMat = new THREE.MeshPhysicalMaterial({
+                    color: 0xffaa00, emissive: 0xff6600, emissiveIntensity: 0.4,
+                    transmission: 0.9, opacity: 1, metalness: 0, roughness: 0.1
+                });
+                mainMesh = new THREE.Mesh(crystalGeo, crystalMat);
+                // Orbiting energy rings
+                for(let i=0; i<3; i++) {
+                    const ring = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.02, 16, 64), new THREE.MeshBasicMaterial({color: 0xffdd00}));
+                    ring.rotation.x = Math.random() * Math.PI;
+                    ring.rotation.y = Math.random() * Math.PI;
+                    group.add(ring);
+                }
+                break;
+                
+            case 'cities':
+                // Abstract floating city block (glass and neon)
+                mainMesh = new THREE.Group();
+                const buildingMat = new THREE.MeshPhysicalMaterial({
+                    color: 0x4da6ff, transmission: 0.9, opacity: 1, roughness: 0.1, metalness: 0.5
+                });
+                for(let i=0; i<5; i++) {
+                    const bw = 0.4 + Math.random()*0.4;
+                    const bh = 1 + Math.random()*2;
+                    const bd = 0.4 + Math.random()*0.4;
+                    const b = new THREE.Mesh(new THREE.BoxGeometry(bw, bh, bd), buildingMat);
+                    b.position.set((Math.random()-0.5)*1.5, bh/2 - 1, (Math.random()-0.5)*1.5);
+                    
+                    // Neon trim
+                    const trim = new THREE.Mesh(new THREE.BoxGeometry(bw+0.02, 0.05, bd+0.02), new THREE.MeshBasicMaterial({color: 0x00ffff}));
+                    trim.position.copy(b.position);
+                    trim.position.y += bh/2;
+                    mainMesh.add(trim);
+                    mainMesh.add(b);
+                }
+                break;
+                
+            case 'biodiversity':
+                // Abstract DNA / Tree of life structure
+                mainMesh = new THREE.Group();
+                const helixMat = new THREE.MeshStandardMaterial({color: 0x2ecc71, emissive: 0x00ff88, emissiveIntensity: 0.2, metalness: 0.8, roughness: 0.2});
+                for(let i=0; i<20; i++) {
+                    const angle = i * 0.4;
+                    const y = -1.5 + (i * 0.15);
+                    const s1 = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), helixMat);
+                    s1.position.set(Math.cos(angle)*1, y, Math.sin(angle)*1);
+                    const s2 = new THREE.Mesh(new THREE.SphereGeometry(0.15, 16, 16), helixMat);
+                    s2.position.set(Math.cos(angle+Math.PI)*1, y, Math.sin(angle+Math.PI)*1);
+                    const link = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 2), new THREE.MeshBasicMaterial({color: 0xaaaaaa}));
+                    link.position.set(0, y, 0);
+                    link.rotation.z = Math.PI/2;
+                    link.rotation.y = -angle;
+                    mainMesh.add(s1); mainMesh.add(s2); mainMesh.add(link);
+                }
+                break;
+                
+            case 'recycling':
+                // Floating Möbius strip style geometry
+                const mobGeo = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+                const mobMat = new THREE.MeshPhysicalMaterial({
+                    color: 0x00ff88, metalness: 0.9, roughness: 0.1, clearcoat: 1.0, emissive: 0x004422
+                });
+                mainMesh = new THREE.Mesh(mobGeo, mobMat);
+                break;
+                
+            default:
+                mainMesh = new THREE.Mesh(
+                    new THREE.BoxGeometry(1.5, 1.5, 1.5),
+                    new THREE.MeshStandardMaterial({ color: 0xffffff })
+                );
+        }
+        
+        group.add(mainMesh);
         return group;
     },
 

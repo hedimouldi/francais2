@@ -11,23 +11,23 @@ const RoomClimate = {
 
         // === 4 NEW DALL-E PANELS ===
         const imgPath = 'assets/panels/climate_panel_1776878073955.png'; // Reusing the generated one 4 times to look like a gallery
-        const p1 = EcoUtils.createImagePanel(imgPath, 'Impact 1', 'Effets dévastateurs du réchauffement.', 5, 3.5);
+        const p1 = EcoUtils.createImagePanel(imgPath, 'Impact 1', 'Effets dévastateurs du réchauffement.', 5, 3.5, 'climate');
         p1.position.set(pos.x - 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p1);
         g.add(p1);
 
-        const p2 = EcoUtils.createImagePanel(imgPath, 'Impact 2', 'Fonte des glaces accélérée.', 5, 3.5);
+        const p2 = EcoUtils.createImagePanel(imgPath, 'Impact 2', 'Fonte des glaces accélérée.', 5, 3.5, 'climate');
         p2.position.set(pos.x + 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p2);
         g.add(p2);
 
-        const p3 = EcoUtils.createImagePanel(imgPath, 'Impact 3', 'Hausse du niveau des mers.', 5, 3.5);
+        const p3 = EcoUtils.createImagePanel(imgPath, 'Impact 3', 'Hausse du niveau des mers.', 5, 3.5, 'climate');
         p3.position.set(pos.x - 17.8, 4.5, pos.z + 12);
         p3.rotation.y = Math.PI / 2;
         Controls.addInteractable(p3);
         g.add(p3);
 
-        const p4 = EcoUtils.createImagePanel(imgPath, 'Impact 4', 'Sécheresses extrêmes.', 5, 3.5);
+        const p4 = EcoUtils.createImagePanel(imgPath, 'Impact 4', 'Sécheresses extrêmes.', 5, 3.5, 'climate');
         p4.position.set(pos.x, 4.5, pos.z + 17.8);
         p4.rotation.y = Math.PI;
         Controls.addInteractable(p4);

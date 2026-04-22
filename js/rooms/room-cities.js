@@ -10,25 +10,25 @@ const RoomCities = {
 
         // === 4 NEW DALL-E PANELS ===
         const imgPath = 'assets/panels/cities_panel_1776878264364.png';
-        const p1 = EcoUtils.createImagePanel(imgPath, 'Ville 1', 'Intégration de la nature en ville.', 5, 3.5);
+        const p1 = EcoUtils.createImagePanel(imgPath, 'Ville 1', 'Mobilité verte.', 5, 3.5, 'cities');
         p1.position.set(pos.x - 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p1);
         g.add(p1);
 
-        const p2 = EcoUtils.createImagePanel(imgPath, 'Ville 2', 'Mobilité volante et propre.', 5, 3.5);
+        const p2 = EcoUtils.createImagePanel(imgPath, 'Ville 2', 'Bâtiments intelligents.', 5, 3.5, 'cities');
         p2.position.set(pos.x + 10, 4.5, pos.z - 17.8);
         Controls.addInteractable(p2);
         g.add(p2);
 
-        const p3 = EcoUtils.createImagePanel(imgPath, 'Ville 3', 'Bâtiments autosuffisants.', 5, 3.5);
-        p3.position.set(pos.x + 17.8, 4.5, pos.z + 10);
-        p3.rotation.y = -Math.PI / 2;
+        const p3 = EcoUtils.createImagePanel(imgPath, 'Ville 3', 'Agriculture urbaine.', 5, 3.5, 'cities');
+        p3.position.set(pos.x - 17.8, 4.5, pos.z - 12);
+        p3.rotation.y = Math.PI / 2;
         Controls.addInteractable(p3);
         g.add(p3);
 
-        const p4 = EcoUtils.createImagePanel(imgPath, 'Ville 4', 'Espaces communautaires.', 5, 3.5);
-        p4.position.set(pos.x - 17.8, 4.5, pos.z + 12);
-        p4.rotation.y = Math.PI / 2;
+        const p4 = EcoUtils.createImagePanel(imgPath, 'Ville 4', 'Gestion des flux.', 5, 3.5, 'cities');
+        p4.position.set(pos.x + 17.8, 4.5, pos.z - 12);
+        p4.rotation.y = -Math.PI / 2;
         Controls.addInteractable(p4);
         g.add(p4);
 
