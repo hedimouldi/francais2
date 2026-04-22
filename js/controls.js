@@ -87,11 +87,13 @@ const Controls = {
 
     _onKeyDown(e) {
         if (!this.enabled) return;
+        const k = e.key.toLowerCase();
+        if (k === 'w' || k === 'z' || e.code === 'ArrowUp') this.moveForward = true;
+        if (k === 's' || e.code === 'ArrowDown') this.moveBackward = true;
+        if (k === 'a' || k === 'q' || e.code === 'ArrowLeft') this.moveLeft = true;
+        if (k === 'd' || e.code === 'ArrowRight') this.moveRight = true;
+
         switch (e.code) {
-            case 'KeyW': case 'ArrowUp':    this.moveForward = true; break;
-            case 'KeyS': case 'ArrowDown':  this.moveBackward = true; break;
-            case 'KeyA': case 'ArrowLeft':  this.moveLeft = true; break;
-            case 'KeyD': case 'ArrowRight': this.moveRight = true; break;
             case 'ShiftLeft': case 'ShiftRight': this.isSprinting = true; break;
             case 'KeyE':
                 if (this.isLocked && this.hoveredObject) {
@@ -115,11 +117,13 @@ const Controls = {
     },
 
     _onKeyUp(e) {
+        const k = e.key.toLowerCase();
+        if (k === 'w' || k === 'z' || e.code === 'ArrowUp') this.moveForward = false;
+        if (k === 's' || e.code === 'ArrowDown') this.moveBackward = false;
+        if (k === 'a' || k === 'q' || e.code === 'ArrowLeft') this.moveLeft = false;
+        if (k === 'd' || e.code === 'ArrowRight') this.moveRight = false;
+
         switch (e.code) {
-            case 'KeyW': case 'ArrowUp':    this.moveForward = false; break;
-            case 'KeyS': case 'ArrowDown':  this.moveBackward = false; break;
-            case 'KeyA': case 'ArrowLeft':  this.moveLeft = false; break;
-            case 'KeyD': case 'ArrowRight': this.moveRight = false; break;
             case 'ShiftLeft': case 'ShiftRight': this.isSprinting = false; break;
         }
     },
