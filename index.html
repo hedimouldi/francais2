@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ÉcoTech 3D — Musée Virtuel de l'Écologie et de la Technologie Durable. Une expérience immersive en 3D pour découvrir les enjeux environnementaux.">
+    <meta name="keywords" content="musée virtuel, 3D, écologie, développement durable, technologie, environnement">
+    <title>ÉcoTech 3D — Musée Virtuel de l'Écologie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="logo-eco">Éco</span><span class="logo-tech">Tech</span><span class="logo-3d">3D</span>
+            </div>
+            <div class="loader-subtitle">Musée Virtuel de l'Écologie</div>
+            <div class="loader-bar-container">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-text" id="loader-text">Chargement des ressources...</div>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" style="display:none;">
+        <div class="welcome-bg"></div>
+        <div class="welcome-particles" id="welcome-particles"></div>
+        <div class="welcome-content">
+            <div class="welcome-badge">🌍 Expérience Immersive 3D</div>
+            <h1 class="welcome-title">
+                <span class="title-eco">Éco</span><span class="title-tech">Tech</span><span class="title-3d"> 3D</span>
+            </h1>
+            <p class="welcome-subtitle">Musée Virtuel de l'Écologie et de la Technologie Durable</p>
+            <p class="welcome-description">
+                Explorez 5 salles thématiques dédiées au climat, aux énergies renouvelables, 
+                aux villes durables, à la biodiversité et au recyclage.
+            </p>
+            <div class="welcome-stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Salles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">20+</div>
+                    <div class="stat-label">Expositions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3D</div>
+                    <div class="stat-label">Immersif</div>
+                </div>
+            </div>
+            <button id="enter-btn" class="enter-button">
+                <span class="btn-icon">🏛️</span>
+                <span class="btn-text">Entrer dans le Musée</span>
+                <span class="btn-arrow">→</span>
+            </button>
+            <div class="welcome-controls-hint">
+                <div class="control-hint"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Déplacer</div>
+                <div class="control-hint"><kbd>🖱️</kbd> Regarder</div>
+                <div class="control-hint"><kbd>Click</kbd> Interagir</div>
+            </div>
+        </div>
+        <div class="welcome-rooms-preview">
+            <div class="room-preview-item" data-room="climate">
+                <span class="room-icon">🌿</span>
+                <span class="room-name">Climat</span>
+            </div>
+            <div class="room-preview-item" data-room="energy">
+                <span class="room-icon">⚡</span>
+                <span class="room-name">Énergies</span>
+            </div>
+            <div class="room-preview-item" data-room="cities">
+                <span class="room-icon">🏙️</span>
+                <span class="room-name">Villes</span>
+            </div>
+            <div class="room-preview-item" data-room="biodiversity">
+                <span class="room-icon">🌳</span>
+                <span class="room-name">Biodiversité</span>
+            </div>
+            <div class="room-preview-item" data-room="recycling">
+                <span class="room-icon">♻️</span>
+                <span class="room-name">Recyclage</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="hud" style="display:none;">
+        <!-- Room Name Indicator -->
+        <div id="room-indicator" class="hud-room-indicator">
+            <span class="room-indicator-icon">🏛️</span>
+            <span class="room-indicator-text">Hall Central</span>
+        </div>
+
+        <!-- Minimap -->
+        <div id="minimap" class="hud-minimap">
+            <canvas id="minimap-canvas" width="180" height="180"></canvas>
+        </div>
+
+        <!-- Crosshair -->
+        <div id="crosshair" class="hud-crosshair">+</div>
+
+        <!-- Controls Help -->
+        <div id="controls-help" class="hud-controls">
+            <div class="controls-title">Contrôles</div>
+            <div class="control-row"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Se déplacer</div>
+            <div class="control-row"><kbd>Shift</kbd> Courir</div>
+            <div class="control-row"><kbd>Click</kbd> Interagir</div>
+            <div class="control-row"><kbd>H</kbd> Aide</div>
+            <div class="control-row"><kbd>M</kbd> Minimap</div>
+            <div class="control-row"><kbd>Esc</kbd> Menu</div>
+        </div>
+
+        <!-- Info Panel (for exhibit details) -->
+        <div id="info-panel" class="hud-info-panel" style="display:none;">
+            <div class="info-panel-header">
+                <span class="info-panel-icon" id="info-icon">🌍</span>
+                <span class="info-panel-title" id="info-title">Titre</span>
+                <button class="info-panel-close" id="info-close">✕</button>
+            </div>
+            <div class="info-panel-body" id="info-body">
+                Description de l'exposition
+            </div>
+        </div>
+
+        <!-- Interaction Prompt -->
+        <div id="interact-prompt" class="hud-interact-prompt" style="display:none;">
+            <span class="prompt-key">E</span>
+            <span class="prompt-text">pour interagir</span>
+        </div>
+
+        <!-- 3D Prototype Modal -->
+        <div id="prototype-modal" class="prototype-modal" style="display:none;">
+            <div class="prototype-modal-content">
+                <button class="prototype-close" id="prototype-close"><kbd>F</kbd> Fermer ✕</button>
+                <div class="prototype-layout">
+                    <div class="prototype-3d-container" id="prototype-3d-container">
+                        <!-- Three.js scene for prototype will be mounted here -->
+                    </div>
+                    <div class="prototype-info">
+                        <h2 id="prototype-title">Titre du Prototype</h2>
+                        <div class="prototype-badges" id="prototype-badges">
+                            <span class="badge">Innovation</span>
+                        </div>
+                        <div class="prototype-description" id="prototype-description">
+                            Description détaillée du prototype...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Menu -->
+    <div id="pause-menu" style="display:none;">
+        <div class="pause-overlay"></div>
+        <div class="pause-content">
+            <h2 class="pause-title">⏸️ Pause</h2>
+            <button class="pause-btn" id="resume-btn">▶ Reprendre la visite</button>
+            <button class="pause-btn" id="restart-btn">🔄 Retour à l'accueil</button>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/museum.js"></script>
+    <script src="js/rooms/hall.js"></script>
+    <script src="js/rooms/room-climate.js"></script>
+    <script src="js/rooms/room-energy.js"></script>
+    <script src="js/rooms/room-cities.js"></script>
+    <script src="js/rooms/room-biodiversity.js"></script>
+    <script src="js/rooms/room-recycling.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
